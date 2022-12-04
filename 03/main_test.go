@@ -9,7 +9,7 @@ import (
 var sample string
 
 func Test_part1(t *testing.T) {
-	want := 15
+	want := 157
 	got := part1(sample)
 	if got != want {
 		t.Errorf("part1_sample = %d; want %d", got, want)
@@ -17,7 +17,7 @@ func Test_part1(t *testing.T) {
 }
 
 func Test_part2(t *testing.T) {
-	want := 12
+	want := 70
 	got := part2(sample)
 	if got != want {
 		t.Errorf("part2_sample = %d; want %d", got, want)
