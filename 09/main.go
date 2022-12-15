@@ -70,8 +70,8 @@ func solve(input string, length int) int {
 					continue
 				}
 
-        current.x += move(delta.x)
-        current.y += move(delta.y)
+				current.x += move(delta.x)
+				current.y += move(delta.y)
 			}
 
 			visited[Point{tail.x, tail.y}] = true
@@ -82,11 +82,11 @@ func solve(input string, length int) int {
 }
 
 func move(delta int) int {
-  if delta < 0 {
-    return -1
-  } else if delta > 0 {
-    return 1
-  }
+	if delta < 0 {
+		return -1
+	} else if delta > 0 {
+		return 1
+	}
 
-  return 0
+	return 0
 }

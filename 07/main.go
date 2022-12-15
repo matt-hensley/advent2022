@@ -3,7 +3,7 @@ package main
 import (
 	_ "embed"
 	"fmt"
-  "sort"
+	"sort"
 	"strconv"
 	"strings"
 )
@@ -56,8 +56,8 @@ func main() {
 }
 
 func part1(input string) int {
-  dirs := build_tree(input)
-  sum := 0
+	dirs := build_tree(input)
+	sum := 0
 
 	for _, dir := range dirs {
 		size := dir.size()
@@ -70,28 +70,26 @@ func part1(input string) int {
 	return sum
 }
 
-
 func part2(input string) int {
-  max := 70000000
-  target := 30000000
-  dirs := build_tree(input)
-  current := max - dirs[0].size()
+	max := 70000000
+	target := 30000000
+	dirs := build_tree(input)
+	current := max - dirs[0].size()
 
-  sort.SliceStable(dirs, func (l int, r int) bool {
-    return dirs[l].size() < dirs[r].size()
-  })
+	sort.SliceStable(dirs, func(l int, r int) bool {
+		return dirs[l].size() < dirs[r].size()
+	})
 
-  for _, dir := range dirs {
-    size := dir.size()
+	for _, dir := range dirs {
+		size := dir.size()
 
-    if current + size >= target {
-      return size
-    }
-  }
-  
+		if current+size >= target {
+			return size
+		}
+	}
+
 	return -1
 }
-
 
 func build_tree(input string) []*Directory {
 	var root *Directory
@@ -117,16 +115,16 @@ func build_tree(input string) []*Directory {
 				}
 
 				if root == nil {
-          // only create root dir
-          // other dirs are seen by ls command first
+					// only create root dir
+					// other dirs are seen by ls command first
 					dir := newDirectory(name, current)
 					dirs = append(dirs, dir)
 					root = dir
 					current = dir
-          continue
+					continue
 				}
 
-        current = current.children[name]
+				current = current.children[name]
 			case "ls":
 				// list
 			default:
@@ -139,8 +137,8 @@ func build_tree(input string) []*Directory {
 				continue
 			}
 
-      dir := newDirectory(name, current)
-      dirs = append(dirs, dir)
+			dir := newDirectory(name, current)
+			dirs = append(dirs, dir)
 			current.children[name] = dir
 		default:
 			// file?

@@ -17,136 +17,136 @@ func main() {
 
 func part1(input string) int {
 	grid := build_grid(input)
-  height := len(grid)
-  width := len(grid[0])
+	height := len(grid)
+	width := len(grid[0])
 	visible := 0
 
 	for y, row := range grid {
-    if y == 0 || y == height - 1 {
-      // first and last column
-      continue
-    }
+		if y == 0 || y == height-1 {
+			// first and last column
+			continue
+		}
 
-    for x := range row {
-      if x == 0 || x == width - 1 {
-        // first and last row
-        continue
-      }
+		for x := range row {
+			if x == 0 || x == width-1 {
+				// first and last row
+				continue
+			}
 
-      left := max(grid[y][:x])
-      right := max(grid[y][x + 1:])
-      current := grid[y][x]
+			left := max(grid[y][:x])
+			right := max(grid[y][x+1:])
+			current := grid[y][x]
 
-      if left < current || right < current {
-        visible += 1
-        continue
-      }
-      
-      col := column(grid, x)
-      up := max(col[:y])
-      down := max(col[y + 1:])
+			if left < current || right < current {
+				visible += 1
+				continue
+			}
 
-      if up < current || down < current {
-        visible += 1
-        continue
-      }
+			col := column(grid, x)
+			up := max(col[:y])
+			down := max(col[y+1:])
+
+			if up < current || down < current {
+				visible += 1
+				continue
+			}
 		}
 	}
 
-  visible += height * 2
-  visible += width * 2
-  visible -= 4 // 4 corners
-  
+	visible += height * 2
+	visible += width * 2
+	visible -= 4 // 4 corners
+
 	return visible
 }
 
 func part2(input string) int {
-  grid := build_grid(input)
-  max := 0
+	grid := build_grid(input)
+	max := 0
 
 	for y, row := range grid {
-    for x := range row {
-      left := grid[y][:x]
-      right := grid[y][x + 1:]
-      current := grid[y][x]
+		for x := range row {
+			left := grid[y][:x]
+			right := grid[y][x+1:]
+			current := grid[y][x]
 
-      scores := make([]int, 0)
-      scores = append(scores, scenic_score(current, left, true))
-      scores = append(scores, scenic_score(current, right, false))
+			scores := make([]int, 0)
+			scores = append(scores, scenic_score(current, left, true))
+			scores = append(scores, scenic_score(current, right, false))
 
-      col := column(grid, x)
-      up := col[:y]
-      down := col[y + 1:]
-      scores = append(scores, scenic_score(current, up, true))
-      scores = append(scores, scenic_score(current, down, false))
-      score := mult(scores)
+			col := column(grid, x)
+			up := col[:y]
+			down := col[y+1:]
+			scores = append(scores, scenic_score(current, up, true))
+			scores = append(scores, scenic_score(current, down, false))
+			score := mult(scores)
 
-      if score > max {
-        max = score
-      }
-    }
-  }
+			if score > max {
+				max = score
+			}
+		}
+	}
 
-  //fmt.Println(scores)
-  
+	//fmt.Println(scores)
+
 	return max
 }
 
 func mult(values []int) int {
-  acc := 1
+	acc := 1
 
-  for _, value := range values {
-    acc *= value
-  }
+	for _, value := range values {
+		acc *= value
+	}
 
-  return acc
+	return acc
 }
 
 func max(values []int) int {
 	max := values[0]
 
-  for _, value := range values {
+	for _, value := range values {
 		if max < value {
 			max = value
 		}
 	}
 
-  return max
+	return max
 }
 
 func column(grid [][]int, x int) []int {
-  col := make([]int, 0)
-  
-  for y := range grid {
-    col = append(col, grid[y][x])  
-  }
+	col := make([]int, 0)
 
-  return col
+	for y := range grid {
+		col = append(col, grid[y][x])
+	}
+
+	return col
 }
 
 func scenic_score(target int, trees []int, reverse bool) int {
-  count := 0
-  if reverse == false {
-    for i := 0; i < len(trees); i++ {
-      count++
-      if trees[i] >= target {
-        break
-      }
-    }
-  } else {
-    for i := len(trees) - 1; 0 <= i; i-- {
-      count++
-      if trees[i] >= target {
-        break
-      }
-    }
-  }
+	count := 0
+	if reverse == false {
+		for i := 0; i < len(trees); i++ {
+			count++
+			if trees[i] >= target {
+				break
+			}
+		}
+	} else {
+		for i := len(trees) - 1; 0 <= i; i-- {
+			count++
+			if trees[i] >= target {
+				break
+			}
+		}
+	}
 
-  return count
+	return count
 }
 
 func build_grid(input string) [][]int {
-  grid := [][]int{}
+	grid := [][]int{}
 
 	for _, line := range strings.Split(input, "\n") {
 		row := []int{}
@@ -159,5 +159,5 @@ func build_grid(input string) [][]int {
 		grid = append(grid, row)
 	}
 
-  return grid
+	return grid
 }
