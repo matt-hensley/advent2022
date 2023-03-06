@@ -3,7 +3,7 @@ package main
 import (
 	_ "embed"
 	"fmt"
-  "sort"
+	"sort"
 	"strconv"
 	"strings"
 )
@@ -40,16 +40,16 @@ func part2(input string) int {
 }
 
 func solve(input string, rounds int, reduceWorry bool) int {
-  monkeys := parse_monkeys(input)
+	monkeys := parse_monkeys(input)
 
-  for round := 0; round < rounds; round++ {
+	for round := 0; round < rounds; round++ {
 		for _, monkey := range monkeys {
 			for _, item := range monkey.items {
 				worry := operation(item, monkey.operation, monkey.operand)
 
-        if reduceWorry == true {
-          worry = worry / 3
-        }
+				if reduceWorry == true {
+					worry = worry / 3
+				}
 
 				if worry%monkey.divisible == 0 {
 					//fmt.Println(item, worry, "to", monkey.ifTrue)
@@ -65,20 +65,19 @@ func solve(input string, rounds int, reduceWorry bool) int {
 			monkey.items = []int{}
 		}
 	}
-  
-  inspections := []int{}
+
+	inspections := []int{}
 
 	for _, monkey := range monkeys {
-    inspections = append(inspections, monkey.inspections)
+		inspections = append(inspections, monkey.inspections)
 	}
-  
-  fmt.Println(inspections)
 
-  sort.Slice(inspections, func (l, r int) bool {
-    return inspections[r] < inspections[l]
-  })
+	fmt.Println(inspections)
 
-  
+	sort.Slice(inspections, func(l, r int) bool {
+		return inspections[r] < inspections[l]
+	})
+
 	return inspections[0] * inspections[1]
 }
 
